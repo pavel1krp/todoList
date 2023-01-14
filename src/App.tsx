@@ -6,7 +6,7 @@ import {changeTodoListFilterAC, todoListReducer, todoListReducerActionType} from
 import {
     addTaskAC,
     addTodoListAc,
-    changeIdDoneAC,
+    changeIdDoneAC, changeTaskTitleAC,
     deleteTaskAC,
 } from "./State/task-reducer";
 import {useDispatch, useSelector} from "react-redux";
@@ -47,6 +47,9 @@ function App() {
     const addTodoList =(title:string)=>{
         dispatch(addTodoListAc(title))
     }
+    const changeTaskTitle =(listId:string, taskId:string, title:string)=>{
+        dispatch(changeTaskTitleAC(listId, taskId,title))
+    }
     const mappedTodoLIst = todolists.map(el => {
         let filteredTask = tasks[el.id]
         if (el.filter === 'active') {
@@ -64,6 +67,7 @@ function App() {
                       deleteTask={deleteTask}
                       title={el.title}
                       addTask={addTask}
+                      changeTaskTitle={changeTaskTitle}
             />
         )
     })

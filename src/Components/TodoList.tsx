@@ -11,6 +11,7 @@ type TodoListPropsType ={
     deleteTask:(ListId:string, taskId:string)=>void
     title:string
     addTask:(listId:string, title:string)=>void
+    changeTaskTitle:(listId:string, taskId:string, title:string)=>void
 }
 
 export const TodoList = (props:TodoListPropsType) => {
@@ -23,10 +24,13 @@ export const TodoList = (props:TodoListPropsType) => {
         const deleteTaskHandler =()=>{
             deleteTask(ListId,el.id)
         }
+        const changeTaskTitleHandler = (newTitle:string)=>{
+            restProps.changeTaskTitle(ListId, el.id,newTitle)
+        }
         return(
             <li key={el.id}>
                 <input onChange={changeIsDoneHandler} type="checkbox" checked={el.isDone}/>
-                <EditableSpan title={el.title}/>
+                <EditableSpan title={el.title} changeTitle={changeTaskTitleHandler}/>
                 <button onClick={deleteTaskHandler}>x</button>
             </li>
         )
@@ -37,9 +41,12 @@ export const TodoList = (props:TodoListPropsType) => {
     const addTaskHandler = (title:string)=>{
         addTask(ListId,title )
     }
+    const deleteTodoList = ()=>{
+
+    }
     return (
         <div>
-            <h3>{title}</h3>
+            <h3><EditableSpan changeTitle={()=>{}} title={title}/><button onClick={deleteTodoList}>x</button></h3>
             <InputForm addItem={addTaskHandler}/>
             <ul>
                 {mappedTask}

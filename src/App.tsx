@@ -48,6 +48,9 @@ function App() {
         console.log(value)
         setTodolists(todolists.map(el => el.id === todoListId ? {...el, filter: value} : el))
     }
+    const addTask =(listId:string, title:string)=>{
+        setTasks({...tasks, [listId]:[...tasks[listId], {id: v1(), title: title, isDone: false}]})
+    }
     const mappedTodoLIst = todolists.map(el => {
         let filteredTask = tasks[el.id]
         if (el.filter === 'active') {
@@ -63,6 +66,8 @@ function App() {
                       ListId={el.id}
                       changeIsDoneInput={changeIsDoneInput}
                       deleteTask={deleteTask}
+                      title={el.title}
+                      addTask={addTask}
             />
         )
     })

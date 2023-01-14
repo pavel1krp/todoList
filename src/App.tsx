@@ -1,8 +1,17 @@
-import React, {useState} from 'react';
+import React, {Reducer, useReducer, useState} from 'react';
 import './App.css';
 import {TodoList} from "./Components/TodoList";
 import {v1} from "uuid";
 import {InputForm} from "./Components/InputForm";
+import {changeTodoListFilterAC, todoListReducer, todoListReducerActionType} from "./State/todoList-reducer";
+import {
+    addTaskAC,
+    addTodoListAc,
+    changeIdDoneAC,
+    deleteTaskAC,
+    taskReducer,
+    taskReducerActionType
+} from "./State/task-reducer";
 
 export type TaskType = {
     id: string
@@ -24,12 +33,12 @@ function App() {
     let todolistID1 = v1()
     let todolistID2 = v1()
 
-    let [todolists, setTodolists] = useState<Array<TodolistsType>>([
+    let [todolists, setTodolists] = useReducer<Reducer<TodolistsType[], todoListReducerActionType>>(todoListReducer, [
         {id: todolistID1, title: 'What to learn', filter: 'all'},
         {id: todolistID2, title: 'What to buy', filter: 'all'},
     ])
 
-    let [tasks, setTasks] = useState<TaskObjType>({
+    let [tasks, setTasks] = useReducer<Reducer<TaskObjType, taskReducerActionType>>(taskReducer,{
         [todolistID1]: [
             {id: v1(), title: 'HTML&CSS', isDone: true},
             {id: v1(), title: 'JS', isDone: true},
@@ -42,21 +51,21 @@ function App() {
         ]
     })
     const deleteTask = (ListId: string, taskId: string) => {
-        setTasks({...tasks, [ListId]: tasks[ListId].filter(el => el.id !== taskId)})
+        setTasks(deleteTaskAC(ListId,taskId))
     }
     const changeIsDoneInput = (todoListId: string, taskId: string, done: boolean) => {
-        setTasks({...tasks, [todoListId]: tasks[todoListId].map(el => el.id === taskId ? {...el, isDone: done} : el)})
+        setTasks(changeIdDoneAC(todoListId,taskId,done))
     }
     const changeTodoListFilter = (todoListId: string, value: FilterValueType) => {
-        setTodolists(todolists.map(el => el.id === todoListId ? {...el, filter: value} : el))
+        setTodolists(changeTodoListFilterAC(todoListId,value))
     }
     const addTask =(listId:string, title:string)=>{
-        setTasks({...tasks, [listId]:[...tasks[listId], {id: v1(), title: title, isDone: false}]})
+        setTasks(addTaskAC(listId,title))
     }
     const addTodoList =(title:string)=>{
-        const listID = v1()
-        setTodolists([{id: listID, title: title, filter: 'all'},...todolists])
-        setTasks({...tasks, [listID]:[]})
+        const action = addTodoListAc(title)
+        setTodolists(action)
+        setTasks(action)
     }
     const mappedTodoLIst = todolists.map(el => {
         let filteredTask = tasks[el.id]

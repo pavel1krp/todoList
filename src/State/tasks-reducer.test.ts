@@ -1,4 +1,4 @@
-import {addTaskAC, deleteTaskAC, taskReducer} from "./task-reducer";
+import {addTaskAC, changeIdDoneAC, deleteTaskAC, taskReducer} from "./task-reducer";
 import {v1} from "uuid";
 import {TaskObjType} from "../App";
 let todolistID1 = v1()
@@ -30,4 +30,10 @@ test(('must add task for specific list'),()=>{
     expect(result[todolistID1].length).toBe(3)
     expect(result[todolistID2].length).toBe(3)
     expect(result[todolistID2][2].title).toBe('title')
+})
+test(('must change isDone specific list in specific task'),()=>{
+    const result = taskReducer(tasks, changeIdDoneAC(todolistID2, '2', true))
+    expect(result[todolistID1][1].isDone).toBe(true)
+    expect(result[todolistID2][1].isDone).toBe(true)
+
 })

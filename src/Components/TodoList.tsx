@@ -1,5 +1,6 @@
 import React from 'react';
 import {FilterValueType, TaskType, TodolistsType} from "../App";
+import {EditableSpan} from "./EditableSpan";
 
 type TodoListPropsType ={
     list:TaskType[]
@@ -13,7 +14,7 @@ export const TodoList = (props:TodoListPropsType) => {
         return(
             <li key={el.id}>
                 <input type="checkbox" checked={el.isDone}/>
-                <span>{el.title}</span>
+                <EditableSpan title={el.title}/>
                 <button>x</button>
             </li>
         )

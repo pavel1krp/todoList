@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {TodoList} from "./Components/TodoList";
 import {v1} from "uuid";
+import {InputForm} from "./Components/InputForm";
 
 export type TaskType = {
     id: string
@@ -51,6 +52,11 @@ function App() {
     const addTask =(listId:string, title:string)=>{
         setTasks({...tasks, [listId]:[...tasks[listId], {id: v1(), title: title, isDone: false}]})
     }
+    const addTodoList =(title:string)=>{
+        const listID = v1()
+        setTodolists([{id: listID, title: title, filter: 'all'},...todolists])
+        setTasks({...tasks, [listID]:[]})
+    }
     const mappedTodoLIst = todolists.map(el => {
         let filteredTask = tasks[el.id]
         if (el.filter === 'active') {
@@ -73,6 +79,7 @@ function App() {
     })
     return (
         <div className="App">
+            <InputForm addItem={addTodoList}/>
             {mappedTodoLIst}
         </div>
     );

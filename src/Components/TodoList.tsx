@@ -40,7 +40,7 @@ export const TodoList = (props:TodoListPropsType) => {
     return (
         <div>
             <h3>{title}</h3>
-            <InputForm addTask={addTaskHandler}/>
+            <InputForm addItem={addTaskHandler}/>
             <ul>
                 {mappedTask}
             </ul>

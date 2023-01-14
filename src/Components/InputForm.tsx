@@ -1,11 +1,11 @@
 import React, {ChangeEvent, useState} from 'react';
 
 type InputFormPropsType = {
-    addTask: (title:string)=>void
+    addItem: (title:string)=>void
 }
 
 export const InputForm = (props:InputFormPropsType) => {
-    const {addTask, ...restProps}= props
+    const {addItem, ...restProps}= props
     const [error, serError]= useState('')
     const [title, setTitle] = useState('');
     const changeInputValue = (e:ChangeEvent<HTMLInputElement>)=>{
@@ -14,7 +14,7 @@ export const InputForm = (props:InputFormPropsType) => {
     }
     const addTextHandler =()=>{
         if(title.trim()!==''){
-            addTask(title)
+            addItem(title)
         }
        else{
            serError('Wrong value!')

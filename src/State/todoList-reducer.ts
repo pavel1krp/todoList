@@ -1,8 +1,8 @@
-import {FilterValueType, TaskObjType, TodolistsType} from "../App";
-import {v1} from "uuid";
+import {FilterValueType, TodolistsType} from "../App";
 import {addTodoListAcType} from "./task-reducer";
 
-export const todoListReducer =(state:TodolistsType[], action:todoListReducerActionType):TodolistsType[]=>{
+const initialState:TodolistsType[] = []
+export const todoListReducer =(state:TodolistsType[] = initialState, action:todoListReducerActionType):TodolistsType[]=>{
     switch (action.type){
         case "CHANGE-FILTER": return state.map(el => el.id === action.todoListId ? {...el, filter: action.value} : el)
         case "ADD-TODO-LIST":return [{id: action.listId, title: action.title, filter: 'all'},...state]

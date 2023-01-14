@@ -37,6 +37,9 @@ function App() {
             {id: v1(), title: 'GraphQL', isDone: false},
         ]
     })
+    const changeIsDoneInput = (todoListId:string, taskId:string, done:boolean) => {
+        setTasks({...tasks, [todoListId]: tasks[todoListId].map(el=>el.id===taskId?{...el, isDone:done } :el) })
+    }
     const changeTodoListFilter = (todoListId:string, value:FilterValueType)=>{
         console.log(todoListId)
         console.log(value)
@@ -55,6 +58,7 @@ function App() {
             list={filteredTask}
             changeTodoListFilter={changeTodoListFilter}
             ListId ={el.id}
+                  changeIsDoneInput={changeIsDoneInput}
         />
         )
     })

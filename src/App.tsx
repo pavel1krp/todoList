@@ -37,29 +37,33 @@ function App() {
             {id: v1(), title: 'GraphQL', isDone: false},
         ]
     })
-    const changeIsDoneInput = (todoListId:string, taskId:string, done:boolean) => {
-        setTasks({...tasks, [todoListId]: tasks[todoListId].map(el=>el.id===taskId?{...el, isDone:done } :el) })
+    const deleteTask = (ListId: string, taskId: string) => {
+        setTasks({...tasks, [ListId]: tasks[ListId].filter(el => el.id !== taskId)})
     }
-    const changeTodoListFilter = (todoListId:string, value:FilterValueType)=>{
+    const changeIsDoneInput = (todoListId: string, taskId: string, done: boolean) => {
+        setTasks({...tasks, [todoListId]: tasks[todoListId].map(el => el.id === taskId ? {...el, isDone: done} : el)})
+    }
+    const changeTodoListFilter = (todoListId: string, value: FilterValueType) => {
         console.log(todoListId)
         console.log(value)
-        setTodolists(todolists.map(el=>el.id === todoListId? {...el, filter: value }:el))
+        setTodolists(todolists.map(el => el.id === todoListId ? {...el, filter: value} : el))
     }
-    const mappedTodoLIst = todolists.map(el=>{
+    const mappedTodoLIst = todolists.map(el => {
         let filteredTask = tasks[el.id]
-        if(el.filter === 'active'){
-            filteredTask = filteredTask.filter(el=> !el.isDone)
+        if (el.filter === 'active') {
+            filteredTask = filteredTask.filter(el => !el.isDone)
         }
-        if(el.filter === 'completed'){
-            filteredTask = filteredTask.filter(el=> el.isDone)
+        if (el.filter === 'completed') {
+            filteredTask = filteredTask.filter(el => el.isDone)
         }
-        return(
-        <TodoList key={el.id}
-            list={filteredTask}
-            changeTodoListFilter={changeTodoListFilter}
-            ListId ={el.id}
-                  changeIsDoneInput={changeIsDoneInput}
-        />
+        return (
+            <TodoList key={el.id}
+                      list={filteredTask}
+                      changeTodoListFilter={changeTodoListFilter}
+                      ListId={el.id}
+                      changeIsDoneInput={changeIsDoneInput}
+                      deleteTask={deleteTask}
+            />
         )
     })
     return (

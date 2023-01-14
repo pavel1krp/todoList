@@ -2,7 +2,12 @@ import React from 'react';
 import './App.css';
 import {TodoList} from "./Components/TodoList";
 import {InputForm} from "./Components/InputForm";
-import {changeTodoListFilterAC, todoListReducer, todoListReducerActionType} from "./State/todoList-reducer";
+import {
+    changeTodoListFilterAC,
+    changeTodoListTitleAC, deleteTodoListAc,
+    todoListReducer,
+    todoListReducerActionType
+} from "./State/todoList-reducer";
 import {
     addTaskAC,
     addTodoListAc,
@@ -24,7 +29,7 @@ export type TodolistsType = {
     filter: FilterValueType
 }
 export type TaskObjType = {
-    [key:string]: TaskType[]
+    [key: string]: TaskType[]
 }
 
 function App() {
@@ -33,22 +38,28 @@ function App() {
     const todolists = useSelector<AppRootStateType, TodolistsType[]>(state => state.todoList)
     const tasks = useSelector<AppRootStateType, TaskObjType>(state => state.task)
     const deleteTask = (ListId: string, taskId: string) => {
-        dispatch(deleteTaskAC(ListId,taskId))
+        dispatch(deleteTaskAC(ListId, taskId))
     }
     const changeIsDoneInput = (todoListId: string, taskId: string, done: boolean) => {
-        dispatch(changeIdDoneAC(todoListId,taskId,done))
+        dispatch(changeIdDoneAC(todoListId, taskId, done))
     }
     const changeTodoListFilter = (todoListId: string, value: FilterValueType) => {
-        dispatch(changeTodoListFilterAC(todoListId,value))
+        dispatch(changeTodoListFilterAC(todoListId, value))
     }
-    const addTask =(listId:string, title:string)=>{
-        dispatch(addTaskAC(listId,title))
+    const addTask = (listId: string, title: string) => {
+        dispatch(addTaskAC(listId, title))
     }
-    const addTodoList =(title:string)=>{
+    const addTodoList = (title: string) => {
         dispatch(addTodoListAc(title))
     }
-    const changeTaskTitle =(listId:string, taskId:string, title:string)=>{
-        dispatch(changeTaskTitleAC(listId, taskId,title))
+    const changeTaskTitle = (listId: string, taskId: string, title: string) => {
+        dispatch(changeTaskTitleAC(listId, taskId, title))
+    }
+    const changeTodoListTitle = (listId: string, title: string) => {
+        dispatch(changeTodoListTitleAC(listId, title))
+    }
+    const deleteList = (listId:string)=>{
+        dispatch(deleteTodoListAc(listId))
     }
     const mappedTodoLIst = todolists.map(el => {
         let filteredTask = tasks[el.id]
@@ -68,6 +79,8 @@ function App() {
                       title={el.title}
                       addTask={addTask}
                       changeTaskTitle={changeTaskTitle}
+                      changeTodoListTitle={changeTodoListTitle}
+                      deleteList={deleteList}
             />
         )
     })

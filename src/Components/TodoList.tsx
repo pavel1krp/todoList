@@ -12,11 +12,13 @@ type TodoListPropsType ={
     title:string
     addTask:(listId:string, title:string)=>void
     changeTaskTitle:(listId:string, taskId:string, title:string)=>void
+    changeTodoListTitle:(listId: string, title: string)=>void
+    deleteList:(listId:string)=>void
 }
 
 export const TodoList = (props:TodoListPropsType) => {
     const {list,changeTodoListFilter,ListId, changeIsDoneInput,deleteTask,title,addTask,
-        ...restProps} = props
+        changeTaskTitle,changeTodoListTitle,deleteList, ...restProps} = props
     const mappedTask = list.map(el=>{
         const changeIsDoneHandler=(e: ChangeEvent<HTMLInputElement>)=>{
             changeIsDoneInput(ListId, el.id, e.currentTarget.checked)
@@ -25,7 +27,7 @@ export const TodoList = (props:TodoListPropsType) => {
             deleteTask(ListId,el.id)
         }
         const changeTaskTitleHandler = (newTitle:string)=>{
-            restProps.changeTaskTitle(ListId, el.id,newTitle)
+            changeTaskTitle(ListId, el.id,newTitle)
         }
         return(
             <li key={el.id}>
@@ -42,11 +44,14 @@ export const TodoList = (props:TodoListPropsType) => {
         addTask(ListId,title )
     }
     const deleteTodoList = ()=>{
-
+        deleteList(ListId)
+    }
+    const changeListTitleHandler =(title:string)=>{
+        changeTodoListTitle(ListId, title)
     }
     return (
         <div>
-            <h3><EditableSpan changeTitle={()=>{}} title={title}/><button onClick={deleteTodoList}>x</button></h3>
+            <h3><EditableSpan changeTitle={changeListTitleHandler} title={title}/><button onClick={deleteTodoList}>x</button></h3>
             <InputForm addItem={addTaskHandler}/>
             <ul>
                 {mappedTask}

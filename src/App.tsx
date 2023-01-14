@@ -8,7 +8,7 @@ export type TaskType = {
     title: string
     isDone: boolean
 }
-type FilterValueType = 'all' | 'active' | 'completed'
+export type FilterValueType = 'all' | 'active' | 'completed'
 export type TodolistsType = {
     id: string
     title: string
@@ -37,10 +37,24 @@ function App() {
             {id: v1(), title: 'GraphQL', isDone: false},
         ]
     })
+    const changeTodoListFilter = (todoListId:string, value:FilterValueType)=>{
+        console.log(todoListId)
+        console.log(value)
+        setTodolists(todolists.map(el=>el.id === todoListId? {...el, filter: value }:el))
+    }
     const mappedTodoLIst = todolists.map(el=>{
+        let filteredTask = tasks[el.id]
+        if(el.filter === 'active'){
+            filteredTask = filteredTask.filter(el=> !el.isDone)
+        }
+        if(el.filter === 'completed'){
+            filteredTask = filteredTask.filter(el=> el.isDone)
+        }
         return(
-        <TodoList
-            list={tasks[el.id]}
+        <TodoList key={el.id}
+            list={filteredTask}
+            changeTodoListFilter={changeTodoListFilter}
+            ListId ={el.id}
         />
         )
     })

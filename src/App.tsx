@@ -41,17 +41,9 @@ function App() {
     const dispatch = useDispatch()
     const todolists = useSelector<AppRootStateType, TodolistsType[]>(state => state.todoList)
     const tasks = useSelector<AppRootStateType, TaskObjType>(state => state.task)
-
-    const addTask = (listId: string, title: string) => {
-        dispatch(addTaskAC(listId, title))
-    }
     const addTodoList = (title: string) => {
         dispatch(addTodoListAc(title))
     }
-    const changeTodoListTitle = (listId: string, title: string) => {
-        dispatch(changeTodoListTitleAC(listId, title))
-    }
-
     const mappedTodoLIst = todolists.map(el => {
         let filteredTask = tasks[el.id]
         if (el.filter === 'active') {
@@ -61,8 +53,8 @@ function App() {
             filteredTask = filteredTask.filter(el => el.isDone)
         }
         return (
-            <Paper style={{padding: '10px'}}>
-                <Grid item>
+            <Paper key={el.id} style={{padding: '10px'}}>
+                <Grid key={el.id} item>
 
                     <TodoList key={el.id}
                               list={filteredTask}

@@ -7,8 +7,9 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import {useDispatch} from "react-redux";
-import {addTaskAC, addTodoListAc, changeIdDoneAC, changeTaskTitleAC, deleteTaskAC} from "../State/task-reducer";
+import {addTaskAC, changeIdDoneAC, changeTaskTitleAC, deleteTaskAC} from "../State/task-reducer";
 import {changeTodoListFilterAC, changeTodoListTitleAC, deleteTodoListAc} from "../State/todoList-reducer";
+import {Task} from "./Task";
 
 type TodoListPropsType = {
     list: TaskType[]
@@ -25,24 +26,7 @@ export const TodoList = (props: TodoListPropsType) => {
     const dispatch = useDispatch()
 
     const mappedTask = list.map(el => {
-        const changeIsDoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            dispatch(changeIdDoneAC(ListId, el.id, e.currentTarget.checked))
-        }
-        const deleteTaskHandler = () => {
-            dispatch(deleteTaskAC(ListId,el.id))
-        }
-        const changeTaskTitleHandler = (newTitle: string) => {
-            dispatch(changeTaskTitleAC(ListId, el.id, newTitle))
-        }
-        return (
-            <li key={el.id}>
-                <Checkbox onChange={changeIsDoneHandler} checked={el.isDone} defaultChecked />
-                <EditableSpan title={el.title} changeTitle={changeTaskTitleHandler}/>
-                <IconButton onClick={deleteTaskHandler} aria-label="delete">
-                    <DeleteIcon/>
-                </IconButton>
-            </li>
-        )
+        return <Task key={el.id} title={el.title} isDone={el.isDone} listId={ListId} taskId={el.id}/>
     })
     const changeFilterHandler = (value: FilterValueType) => {
         dispatch(changeTodoListFilterAC(ListId, value))

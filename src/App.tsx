@@ -3,16 +3,7 @@ import './App.css';
 import {TodoList} from "./Components/TodoList";
 import {InputForm} from "./Components/InputForm";
 import {
-    changeTodoListFilterAC,
-    changeTodoListTitleAC, deleteTodoListAc,
-    todoListReducer,
-    todoListReducerActionType
-} from "./State/todoList-reducer";
-import {
-    addTaskAC,
     addTodoListAc,
-    changeIdDoneAC, changeTaskTitleAC,
-    deleteTaskAC,
 } from "./State/task-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./State/store";
@@ -70,8 +61,8 @@ function App() {
         <div className="App">
             <ButtonAppBar/>
             <Container fixed>
-                <Grid container style={{padding:'20px'}}>
-                        <InputForm addItem={addTodoList}/>
+                <Grid container style={{padding: '20px'}}>
+                    <InputForm addItem={addTodoList}/>
                 </Grid>
                 <Grid container spacing={3}>
                     {mappedTodoLIst}

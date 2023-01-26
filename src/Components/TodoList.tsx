@@ -1,13 +1,12 @@
-import React, {ChangeEvent, ChangeEventHandler} from 'react';
-import {FilterValueType, TaskType, TodolistsType} from "../App";
+import React from 'react';
+import {FilterValueType, TaskType} from "../App";
 import {EditableSpan} from "./EditableSpan";
 import {InputForm} from "./InputForm";
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import {useDispatch} from "react-redux";
-import {addTaskAC, changeIdDoneAC, changeTaskTitleAC, deleteTaskAC} from "../State/task-reducer";
+import {addTaskAC} from "../State/task-reducer";
 import {changeTodoListFilterAC, changeTodoListTitleAC, deleteTodoListAc} from "../State/todoList-reducer";
 import {Task} from "./Task";
 
@@ -15,12 +14,12 @@ type TodoListPropsType = {
     list: TaskType[]
     ListId: string
     title: string
-    filter:FilterValueType
+    filter: FilterValueType
 }
 
 export const TodoList = (props: TodoListPropsType) => {
     const {
-        list, ListId, title,filter, ...restProps
+        list, ListId, title, filter, ...restProps
     } = props
 
     const dispatch = useDispatch()
@@ -32,7 +31,7 @@ export const TodoList = (props: TodoListPropsType) => {
         dispatch(changeTodoListFilterAC(ListId, value))
     }
     const addTaskHandler = (title: string) => {
-        dispatch(addTaskAC(ListId,title))
+        dispatch(addTaskAC(ListId, title))
     }
     const deleteTodoList = () => {
         dispatch(deleteTodoListAc(ListId))
@@ -52,9 +51,12 @@ export const TodoList = (props: TodoListPropsType) => {
                 {mappedTask}
             </ul>
             <div>
-                <Button color={"success"} onClick={() => changeFilterHandler("all")} variant={filter==='all'? 'outlined':'contained'}>All</Button>
-                <Button color={"error"} onClick={() => changeFilterHandler("active")} variant={filter==='active'? 'outlined':'contained'}>Active</Button>
-                <Button color={"secondary"} onClick={() => changeFilterHandler("completed")} variant={filter==='completed'? 'outlined':'contained'}>Completed</Button>
+                <Button color={"success"} onClick={() => changeFilterHandler("all")}
+                        variant={filter === 'all' ? 'outlined' : 'contained'}>All</Button>
+                <Button color={"error"} onClick={() => changeFilterHandler("active")}
+                        variant={filter === 'active' ? 'outlined' : 'contained'}>Active</Button>
+                <Button color={"secondary"} onClick={() => changeFilterHandler("completed")}
+                        variant={filter === 'completed' ? 'outlined' : 'contained'}>Completed</Button>
             </div>
 
         </div>

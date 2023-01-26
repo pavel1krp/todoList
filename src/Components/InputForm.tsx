@@ -1,31 +1,47 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField';
 
 type InputFormPropsType = {
-    addItem: (title:string)=>void
+    addItem: (title: string) => void
 }
 
-export const InputForm = (props:InputFormPropsType) => {
-    const {addItem, ...restProps}= props
-    const [error, serError]= useState('')
+export const InputForm = (props: InputFormPropsType) => {
+    const {addItem, ...restProps} = props
+    const [error, serError] = useState('')
     const [title, setTitle] = useState('');
-    const changeInputValue = (e:ChangeEvent<HTMLInputElement>)=>{
+    const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
         serError('')
         setTitle(e.currentTarget.value)
     }
-    const addTextHandler =()=>{
-        if(title.trim()!==''){
+    const addTextHandler = () => {
+        if (title.trim() !== '') {
             addItem(title)
+        } else {
+            serError('Wrong value!')
         }
-       else{
-           serError('Wrong value!')
+        setTitle('')
+    }
+    const addTextOnPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.code === "Enter") {
+            addTextHandler()
         }
-       setTitle('')
     }
     return (
         <div>
-            <input onChange={changeInputValue} value={title}/>
-            <button onClick={addTextHandler}>+</button>
-            {error? <div>{error}</div>: null}
+            <TextField onKeyDown={addTextOnPressHandler}
+                       onChange={changeInputValue}
+                       value={title}
+                       id="outlined-basic"
+                       label="Write"
+                       variant="outlined"
+                        size={"small"}
+            />
+            <Button style={{maxWidth: '38px', maxHeight: '38px', minWidth: '38px', minHeight: '38px'}}
+                    size={"small"} variant={"contained"}
+                    onClick={addTextHandler}>+
+            </Button>
+            {error ? <div>{error}</div> : null}
         </div>
     );
 };

@@ -81,6 +81,7 @@ function App() {
                       changeTaskTitle={changeTaskTitle}
                       changeTodoListTitle={changeTodoListTitle}
                       deleteList={deleteList}
+                      filter={el.filter}
             />
         )
     })

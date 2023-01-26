@@ -33,15 +33,15 @@ export const InputForm = (props: InputFormPropsType) => {
                        onChange={changeInputValue}
                        value={title}
                        id="outlined-basic"
-                       label="Write"
+                       label={error? 'Title is required!' :"Title"}
                        variant="outlined"
-                        size={"small"}
+                       size={"small"}
+                       error={!!error}
             />
             <Button style={{maxWidth: '38px', maxHeight: '38px', minWidth: '38px', minHeight: '38px'}}
                     size={"small"} variant={"contained"}
                     onClick={addTextHandler}>+
             </Button>
-            {error ? <div>{error}</div> : null}
         </div>
     );
 };

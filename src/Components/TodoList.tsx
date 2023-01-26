@@ -6,36 +6,33 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import {useDispatch} from "react-redux";
+import {addTaskAC, addTodoListAc, changeIdDoneAC, changeTaskTitleAC, deleteTaskAC} from "../State/task-reducer";
+import {changeTodoListFilterAC, changeTodoListTitleAC, deleteTodoListAc} from "../State/todoList-reducer";
 
 type TodoListPropsType = {
     list: TaskType[]
-    changeTodoListFilter: (todoListId: string, value: FilterValueType) => void
     ListId: string
-    changeIsDoneInput: (todoListId: string, taskId: string, done: boolean) => void
-    deleteTask: (ListId: string, taskId: string) => void
     title: string
-    addTask: (listId: string, title: string) => void
-    changeTaskTitle: (listId: string, taskId: string, title: string) => void
-    changeTodoListTitle: (listId: string, title: string) => void
-    deleteList: (listId: string) => void
     filter:FilterValueType
 }
 
 export const TodoList = (props: TodoListPropsType) => {
     const {
-        list, changeTodoListFilter, ListId, changeIsDoneInput, deleteTask, title, addTask,
-        changeTaskTitle, changeTodoListTitle, deleteList,filter, ...restProps
+        list, ListId, title,filter, ...restProps
     } = props
+
+    const dispatch = useDispatch()
 
     const mappedTask = list.map(el => {
         const changeIsDoneHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            changeIsDoneInput(ListId, el.id, e.currentTarget.checked)
+            dispatch(changeIdDoneAC(ListId, el.id, e.currentTarget.checked))
         }
         const deleteTaskHandler = () => {
-            deleteTask(ListId, el.id)
+            dispatch(deleteTaskAC(ListId,el.id))
         }
         const changeTaskTitleHandler = (newTitle: string) => {
-            changeTaskTitle(ListId, el.id, newTitle)
+            dispatch(changeTaskTitleAC(ListId, el.id, newTitle))
         }
         return (
             <li key={el.id}>
@@ -48,16 +45,16 @@ export const TodoList = (props: TodoListPropsType) => {
         )
     })
     const changeFilterHandler = (value: FilterValueType) => {
-        changeTodoListFilter(ListId, value)
+        dispatch(changeTodoListFilterAC(ListId, value))
     }
     const addTaskHandler = (title: string) => {
-        addTask(ListId, title)
+        dispatch(addTaskAC(ListId,title))
     }
     const deleteTodoList = () => {
-        deleteList(ListId)
+        dispatch(deleteTodoListAc(ListId))
     }
     const changeListTitleHandler = (title: string) => {
-        changeTodoListTitle(ListId, title)
+        dispatch(changeTodoListTitleAC(ListId, title))
     }
     return (
         <div>

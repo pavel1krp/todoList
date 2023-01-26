@@ -16,6 +16,10 @@ import {
 } from "./State/task-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./State/store";
+import ButtonAppBar from "./Components/ButtonAppBar";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 
 export type TaskType = {
     id: string
@@ -58,7 +62,7 @@ function App() {
     const changeTodoListTitle = (listId: string, title: string) => {
         dispatch(changeTodoListTitleAC(listId, title))
     }
-    const deleteList = (listId:string)=>{
+    const deleteList = (listId: string) => {
         dispatch(deleteTodoListAc(listId))
     }
     const mappedTodoLIst = todolists.map(el => {
@@ -70,25 +74,37 @@ function App() {
             filteredTask = filteredTask.filter(el => el.isDone)
         }
         return (
-            <TodoList key={el.id}
-                      list={filteredTask}
-                      changeTodoListFilter={changeTodoListFilter}
-                      ListId={el.id}
-                      changeIsDoneInput={changeIsDoneInput}
-                      deleteTask={deleteTask}
-                      title={el.title}
-                      addTask={addTask}
-                      changeTaskTitle={changeTaskTitle}
-                      changeTodoListTitle={changeTodoListTitle}
-                      deleteList={deleteList}
-                      filter={el.filter}
-            />
+            <Paper style={{padding: '10px'}}>
+                <Grid item>
+
+                    <TodoList key={el.id}
+                              list={filteredTask}
+                              changeTodoListFilter={changeTodoListFilter}
+                              ListId={el.id}
+                              changeIsDoneInput={changeIsDoneInput}
+                              deleteTask={deleteTask}
+                              title={el.title}
+                              addTask={addTask}
+                              changeTaskTitle={changeTaskTitle}
+                              changeTodoListTitle={changeTodoListTitle}
+                              deleteList={deleteList}
+                              filter={el.filter}
+                    />
+                </Grid>
+            </Paper>
         )
     })
     return (
         <div className="App">
-            <InputForm addItem={addTodoList}/>
-            {mappedTodoLIst}
+            <ButtonAppBar/>
+            <Container fixed>
+                <Grid container style={{padding:'20px'}}>
+                        <InputForm addItem={addTodoList}/>
+                </Grid>
+                <Grid container spacing={3}>
+                    {mappedTodoLIst}
+                </Grid>
+            </Container>
         </div>
     );
 }

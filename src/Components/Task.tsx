@@ -17,13 +17,13 @@ export const Task = React.memo ((props:PropsTaskType) => {
     const dispatch = useDispatch()
     const changeIsDoneHandler = useCallback( (e: ChangeEvent<HTMLInputElement>) => {
         dispatch(changeIdDoneAC(listId, taskId, e.currentTarget.checked))
-    },[])
+    },[listId,taskId])
     const deleteTaskHandler =useCallback( () => {
         dispatch(deleteTaskAC(listId,taskId))
-    },[])
+    },[listId, taskId])
     const changeTaskTitleHandler = useCallback((newTitle: string) => {
         dispatch(changeTaskTitleAC(listId, taskId, newTitle))
-    },[])
+    },[listId, taskId])
     return (
         <li key={taskId}>
             <Checkbox onChange={changeIsDoneHandler} checked={isDone}  />

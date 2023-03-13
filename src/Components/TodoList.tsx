@@ -37,16 +37,16 @@ export const TodoList = React.memo( (props: TodoListPropsType) => {
     })
     const changeFilterHandler = useCallback(  (value: FilterValueType) => {
         dispatch(changeTodoListFilterAC(ListId, value))
-    },[])
+    },[ListId])
     const addTaskHandler = useCallback ((title: string) => {
         dispatch(addTaskAC(ListId, title))
-    },[])
+    },[ListId,title])
     const deleteTodoList = useCallback( () => {
         dispatch(deleteTodoListAc(ListId))
-    },[])
+    },[ListId])
     const changeListTitleHandler =useCallback( (title: string) => {
         dispatch(changeTodoListTitleAC(ListId, title))
-    },[])
+    },[ListId])
     return (
         <div>
             <h3><EditableSpan changeTitle={changeListTitleHandler} title={title}/>

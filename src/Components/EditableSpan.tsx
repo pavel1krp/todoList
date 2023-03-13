@@ -4,7 +4,6 @@ type EditableSpanPropsType = {
     title:string
     changeTitle:(newTitle:string)=>void
 }
-
 export const EditableSpan = (props:EditableSpanPropsType) => {
     const [editable, setEditable] = useState(false)
     const [title, setTitle]= useState('')

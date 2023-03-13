@@ -12,7 +12,7 @@ type PropsTaskType ={
     title:string
     isDone:boolean
 }
-export const Task = (props:PropsTaskType) => {
+export const Task = React.memo ((props:PropsTaskType) => {
     const {listId, taskId,title,isDone, ...restProps} = props
     const dispatch = useDispatch()
     const changeIsDoneHandler = useCallback( (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,5 +33,5 @@ export const Task = (props:PropsTaskType) => {
             </IconButton>
         </li>
     )
-};
+});
 

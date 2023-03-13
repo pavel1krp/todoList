@@ -17,14 +17,22 @@ type TodoListPropsType = {
     filter: FilterValueType
 }
 
-export const TodoList = (props: TodoListPropsType) => {
+export const TodoList = React.memo( (props: TodoListPropsType) => {
     const {
         list, ListId, title, filter, ...restProps
     } = props
 
+    let filteredTask = props.list
+    if (props.filter === 'active') {
+        filteredTask = filteredTask.filter(el => !el.isDone)
+    }
+    if (props.filter === 'completed') {
+        filteredTask = filteredTask.filter(el => el.isDone)
+    }
+
     const dispatch = useDispatch()
 
-    const mappedTask = list.map(el => {
+    const mappedTask = filteredTask.map(el => {
         return <Task key={el.id} title={el.title} isDone={el.isDone} listId={ListId} taskId={el.id}/>
     })
     const changeFilterHandler = useCallback(  (value: FilterValueType) => {
@@ -61,4 +69,4 @@ export const TodoList = (props: TodoListPropsType) => {
 
         </div>
     );
-};
+});

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useCallback, useState} from 'react';
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField';
 
@@ -17,14 +17,14 @@ export const InputForm = React.memo( (props: InputFormPropsType) => {
 
         setTitle(e.currentTarget.value)
     }
-    const addTextHandler = () => {
+    const addTextHandler = useCallback( () => {
         if (title.trim() !== '') {
             addItem(title)
         } else {
             serError('Wrong value!')
         }
         setTitle('')
-    }
+    },[title])
     const addTextOnPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.code === "Enter") {
             addTextHandler()

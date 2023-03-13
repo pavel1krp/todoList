@@ -36,19 +36,12 @@ function App() {
         dispatch(addTodoListAc(title))
     }
     const mappedTodoLIst = todolists.map(el => {
-        let filteredTask = tasks[el.id]
-        if (el.filter === 'active') {
-            filteredTask = filteredTask.filter(el => !el.isDone)
-        }
-        if (el.filter === 'completed') {
-            filteredTask = filteredTask.filter(el => el.isDone)
-        }
         return (
             <Paper  key={el.id} style={{padding: '10px',margin:'10px'}}>
                 <Grid  key={el.id} item>
 
                     <TodoList key={el.id}
-                              list={filteredTask}
+                              list={tasks[el.id]}
                               ListId={el.id}
                               title={el.title}
                               filter={el.filter}

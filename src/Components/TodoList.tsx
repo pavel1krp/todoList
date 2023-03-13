@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {FilterValueType, TaskType} from "../App";
 import {EditableSpan} from "./EditableSpan";
 import {InputForm} from "./InputForm";
@@ -27,18 +27,18 @@ export const TodoList = (props: TodoListPropsType) => {
     const mappedTask = list.map(el => {
         return <Task key={el.id} title={el.title} isDone={el.isDone} listId={ListId} taskId={el.id}/>
     })
-    const changeFilterHandler = (value: FilterValueType) => {
+    const changeFilterHandler = useCallback(  (value: FilterValueType) => {
         dispatch(changeTodoListFilterAC(ListId, value))
-    }
-    const addTaskHandler = (title: string) => {
+    },[])
+    const addTaskHandler = useCallback ((title: string) => {
         dispatch(addTaskAC(ListId, title))
-    }
-    const deleteTodoList = () => {
+    },[])
+    const deleteTodoList = useCallback( () => {
         dispatch(deleteTodoListAc(ListId))
-    }
-    const changeListTitleHandler = (title: string) => {
+    },[])
+    const changeListTitleHandler =useCallback( (title: string) => {
         dispatch(changeTodoListTitleAC(ListId, title))
-    }
+    },[])
     return (
         <div>
             <h3><EditableSpan changeTitle={changeListTitleHandler} title={title}/>

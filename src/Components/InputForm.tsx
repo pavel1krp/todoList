@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from 'react';
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField';
 
@@ -6,7 +6,7 @@ type InputFormPropsType = {
     addItem: (title: string) => void
 }
 
-export const InputForm = (props: InputFormPropsType) => {
+export const InputForm = React.memo( (props: InputFormPropsType) => {
     const {addItem, ...restProps} = props
     const [error, serError] = useState<null|string>(null)
     const [title, setTitle] = useState('');
@@ -48,4 +48,4 @@ export const InputForm = (props: InputFormPropsType) => {
             </Button>
         </div>
     );
-};
+});

@@ -44,8 +44,8 @@ function App() {
             filteredTask = filteredTask.filter(el => el.isDone)
         }
         return (
-            <Paper key={el.id} style={{padding: '10px'}}>
-                <Grid key={el.id} item>
+            <Paper  key={el.id} style={{padding: '10px',margin:'10px'}}>
+                <Grid  key={el.id} item>
 
                     <TodoList key={el.id}
                               list={filteredTask}

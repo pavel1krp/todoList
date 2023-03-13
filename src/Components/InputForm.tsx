@@ -8,10 +8,13 @@ type InputFormPropsType = {
 
 export const InputForm = (props: InputFormPropsType) => {
     const {addItem, ...restProps} = props
-    const [error, serError] = useState('')
+    const [error, serError] = useState<null|string>(null)
     const [title, setTitle] = useState('');
     const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-        serError('')
+        if(error!==null){
+            serError(null)
+        }
+
         setTitle(e.currentTarget.value)
     }
     const addTextHandler = () => {
@@ -27,6 +30,7 @@ export const InputForm = (props: InputFormPropsType) => {
             addTextHandler()
         }
     }
+    console.log('form')
     return (
         <div>
             <TextField onKeyDown={addTextOnPressHandler}

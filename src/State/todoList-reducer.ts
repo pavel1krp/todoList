@@ -12,6 +12,7 @@ export const todoListReducer = (state: TodolistsType[] = initialState, action: t
             return state.map(el => el.id === action.listID ? {...el, title: action.newTitle} : el)
         case "DELETE-LIST":
             return state.filter(el => el.id !== action.listId)
+        // case "SET-LIST": return action.todoLists.map(el=> ...el, filter:'all')
         default:
             return state
     }
@@ -21,6 +22,7 @@ export type todoListReducerActionType =
     | addTodoListAcType
     | changeTodoListTitleACType
     | deleteTodoListAcType
+    |ReturnType<typeof setTodoListsAC>
 
 type ChangeTodoListFilterACType = ReturnType<typeof changeTodoListFilterAC>
 type changeTodoListTitleACType = ReturnType<typeof changeTodoListTitleAC>
@@ -34,5 +36,8 @@ export const changeTodoListTitleAC = (listID: string, newTitle: string) => {
 }
 export const deleteTodoListAc = (listId: string) => {
     return {type: "DELETE-LIST", listId} as const
+}
+export const setTodoListsAC = (todoLists:Array<TodolistsType>)=>{
+    return {type: 'SET-LIST', todoLists} as  const
 }
 

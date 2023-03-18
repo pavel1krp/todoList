@@ -18,5 +18,12 @@ export const todolistAPI = {
     getTodoLists(){
         const promise = instance.get('todo-lists')
         return promise
+    },
+    deleteTodoLists(todoListId:string){
+        const promise = instance.delete(`todo-lists/${todoListId}`)
+        return promise
+    },updateTodoLists(todoListId:string,newTitle:string){
+        const promise = instance.post(`todo-lists/${todoListId}`,{title:newTitle})
+        return promise
     }
 }

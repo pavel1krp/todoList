@@ -17,6 +17,7 @@ export const todoListReducer = (state: TodolistsType[] = initialState, action: t
             return state
     }
 }
+
 export type todoListReducerActionType =
     ChangeTodoListFilterACType
     | addTodoListAcType

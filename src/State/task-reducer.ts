@@ -1,5 +1,6 @@
 import {TaskObjType} from "../App";
 import {v1} from "uuid";
+import {setTodoListAcType, setTodoListsAC} from "./todoList-reducer";
 
 const initialState:TaskObjType = {}
 
@@ -10,10 +11,20 @@ export const taskReducer =(state:TaskObjType = initialState, action:taskReducerA
         case 'CHANGE-IS-DONE': return {...state,[action.todoListId]:state[action.todoListId].map(el=>el.id === action.taskId?{...el, isDone:action.done} :el)  }
         case 'ADD-TODO-LIST': return {...state, [action.listId]:[]}
         case "CHANGE-TITLE": return {...state, [action.listId]: state[action.listId].map(el=>el.id ===action.taskId? {...el, title:action.title}:el)}
+        case 'SET-LIST': const copyState = {...state}
+            action.todoLists.forEach((el)=>{
+                copyState[el.id]=[]
+            })
+            return copyState
         default:return state
     }
 }
-export type taskReducerActionType = deleteTaskACType|addTaskACType|changeIdDoneACType|addTodoListAcType|changeTaskTitleACType
+export type taskReducerActionType = deleteTaskACType|
+    addTaskACType|
+    changeIdDoneACType|
+    addTodoListAcType|
+    changeTaskTitleACType|
+    setTodoListAcType
 
 type deleteTaskACType =ReturnType<typeof deleteTaskAC>
 

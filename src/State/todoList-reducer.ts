@@ -44,7 +44,7 @@ export const changeTodoListTitleAC = (listID: string, newTitle: string) => {
 export const deleteTodoListAc = (listId: string) => {
     return {type: "DELETE-LIST", listId} as const
 }
-export const setTodoListsAC = (todoLists: Array<TodolistsType>) => {
+export const setTodoListsAC = (todoLists: Array<TodoListType>) => {
     return {type: 'SET-LIST', todoLists} as const
 }
 

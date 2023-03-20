@@ -7,7 +7,6 @@ type InputFormPropsType = {
 }
 
 export const InputForm = React.memo( (props: InputFormPropsType) => {
-    console.log('form')
     const {addItem, ...restProps} = props
     const [error, serError] = useState<null|string>(null)
     const [title, setTitle] = useState('');

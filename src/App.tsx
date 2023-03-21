@@ -12,7 +12,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import {todolistAPI} from "./Api/todoList-api";
-import {setTodoListsAC} from "./State/todoList-reducer";
+import {getTodo, setTodoListsAC} from "./State/todoList-reducer";
 
 export type TaskType = {
     id: string
@@ -32,11 +32,7 @@ export type TaskObjType = {
 function App() {
 
     useEffect(()=>{
-        todolistAPI.getTodoLists()
-            .then(res=>{
-                console.log(res.data)
-                dispatch(setTodoListsAC(res.data))
-            })
+        getTodo
     },[])
 
     const dispatch = useDispatch()

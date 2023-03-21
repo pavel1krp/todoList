@@ -1,6 +1,7 @@
 import {FilterValueType, TodolistsType} from "../App";
 import {addTodoListAcType} from "./task-reducer";
-import {TodoListType} from "../Api/todoList-api";
+import {todolistAPI, TodoListType} from "../Api/todoList-api";
+import {Dispatch} from "redux";
 
 type TodolistsDomainType = TodoListType & {
     filter: FilterValueType
@@ -47,5 +48,13 @@ export const deleteTodoListAc = (listId: string) => {
 }
 export const setTodoListsAC = (todoLists: Array<TodoListType>) => {
     return {type: 'SET-LIST', todoLists} as const
+}
+
+export const getTodo = (dispatch:Dispatch)=>{
+    todolistAPI.getTodoLists()
+        .then(res=>{
+            console.log(res.data)
+            dispatch(setTodoListsAC(res.data))
+        })
 }
 

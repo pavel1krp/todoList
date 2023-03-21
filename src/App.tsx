@@ -6,7 +6,7 @@ import {
     addTodoListAc,
 } from "./State/task-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./State/store";
+import {AppRootStateType, useAppDispatch, useAppSelector} from "./State/store";
 import ButtonAppBar from "./Components/ButtonAppBar";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -31,13 +31,14 @@ export type TaskObjType = {
 
 function App() {
 
+    const dispatch = useAppDispatch()
+
     useEffect(()=>{
-        getTodo
+        dispatch(getTodo)
     },[])
 
-    const dispatch = useDispatch()
-    const todolists = useSelector<AppRootStateType, TodolistsType[]>(state => state.todoList)
-    const tasks = useSelector<AppRootStateType, TaskObjType>(state => state.task)
+    const todolists = useAppSelector<TodolistsType[]>(state => state.todoList)
+    const tasks = useAppSelector<TaskObjType>(state => state.task)
     const addTodoList = (title: string) => {
         dispatch(addTodoListAc(title))
     }

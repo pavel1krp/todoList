@@ -53,7 +53,6 @@ export const setTodoListsAC = (todoLists: Array<TodoListType>) => {
 export const getTodo = (dispatch:Dispatch)=>{
     todolistAPI.getTodoLists()
         .then(res=>{
-            console.log(res.data)
             dispatch(setTodoListsAC(res.data))
         })
 }

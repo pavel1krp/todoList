@@ -6,25 +6,25 @@ type InputFormPropsType = {
     addItem: (title: string) => void
 }
 
-export const InputForm = React.memo( (props: InputFormPropsType) => {
+export const InputForm = React.memo((props: InputFormPropsType) => {
     const {addItem, ...restProps} = props
-    const [error, serError] = useState<null|string>(null)
+    const [error, serError] = useState<null | string>(null)
     const [title, setTitle] = useState('');
     const changeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
-        if(error!==null){
+        if (error !== null) {
             serError(null)
         }
 
         setTitle(e.currentTarget.value)
     }
-    const addTextHandler = useCallback( () => {
+    const addTextHandler = useCallback(() => {
         if (title.trim() !== '') {
             addItem(title)
         } else {
             serError('Wrong value!')
         }
         setTitle('')
-    },[title])
+    }, [title])
     const addTextOnPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.code === "Enter") {
             addTextHandler()
@@ -36,7 +36,7 @@ export const InputForm = React.memo( (props: InputFormPropsType) => {
                        onChange={changeInputValue}
                        value={title}
                        id="outlined-basic"
-                       label={error? 'Title is required!' :"Title"}
+                       label={error ? 'Title is required!' : "Title"}
                        variant="outlined"
                        size={"small"}
                        error={!!error}

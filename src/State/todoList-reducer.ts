@@ -19,7 +19,7 @@ export const todoListReducer = (state: TodolistsDomainType[] = initialState, act
         case "DELETE-LIST":
             return state.filter(el => el.id !== action.listId)
         case "SET-LIST":
-           return  action.todoLists.map(el => ({...el, filter: 'all'}))
+            return action.todoLists.map(el => ({...el, filter: 'all'}))
         default:
             return state
     }
@@ -50,9 +50,9 @@ export const setTodoListsAC = (todoLists: Array<TodoListType>) => {
     return {type: 'SET-LIST', todoLists} as const
 }
 
-export const getTodo = (dispatch:Dispatch)=>{
+export const getTodo = (dispatch: Dispatch) => {
     todolistAPI.getTodoLists()
-        .then(res=>{
+        .then(res => {
             dispatch(setTodoListsAC(res.data))
         })
 }

@@ -1,6 +1,8 @@
 import {TaskObjType} from "../App";
 import {v1} from "uuid";
 import {setTodoListAcType, setTodoListsAC} from "./todoList-reducer";
+import {Dispatch} from "redux";
+import {todolistAPI} from "../Api/todoList-api";
 
 const initialState: TaskObjType = {}
 
@@ -76,4 +78,13 @@ export const changeIdDoneAC = (todoListId: string, taskId: string, done: boolean
 
 export const addTodoListAc = (title: string) => {
     return {type: "ADD-TODO-LIST", title, listId: v1()} as const
+}
+export const setTAsksAC = (tasks: TaskObjType) => {
+    return {type: "ADD-TODO-LIST", title, listId: v1()} as const
+}
+
+
+export const getTasksTC = (todoListId:string)=>(dispatch:Dispatch)=>{
+    todolistAPI.getTasks(todoListId)
+        .then(res=> dispatch() )
 }

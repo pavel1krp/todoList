@@ -19,6 +19,11 @@ type TodoListPropsType = {
 }
 
 export const TodoList = React.memo( (props: TodoListPropsType) => {
+
+    useEffect(()=>{
+
+    },[])
+
     const {
         list, ListId, title, filter, ...restProps
     } = props

@@ -32,9 +32,9 @@ function App() {
 
     const dispatch = useAppDispatch()
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getTodoTC())
-    },[])
+    }, [])
 
     const todolists = useAppSelector<TodolistsType[]>(state => state.todoList)
     const tasks = useAppSelector<TaskObjType>(state => state.task)
@@ -43,8 +43,8 @@ function App() {
     }
     const mappedTodoLIst = todolists.map(el => {
         return (
-            <Paper  key={el.id} style={{padding: '10px',margin:'10px'}}>
-                <Grid  key={el.id} item>
+            <Paper key={el.id} style={{padding: '10px', margin: '10px'}}>
+                <Grid key={el.id} item>
 
                     <TodoList key={el.id}
                               list={tasks[el.id]}

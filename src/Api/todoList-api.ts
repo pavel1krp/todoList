@@ -1,23 +1,25 @@
-import axios from 'axios'
+import axios, {AxiosResponse} from 'axios'
 
 export type TodoListType = {
-    id:string
-    addedDate:string
-    order:number
-    title:string
+    id: string
+    addedDate: string
+    order: number
+    title: string
 }
 export type ResponseType<D> = {
     resultCode: number
     messages: Array<string>
     fieldsErrors: Array<string>
-    data:D
+    data: D
 }
+
 export enum TaskStatuses {
     New = 0,
     InProgress = 1,
     Completed = 2,
     Draft = 3
 }
+
 export enum TaskPriorities {
     Low = 0,
     Middle = 1,
@@ -25,6 +27,7 @@ export enum TaskPriorities {
     Urgently = 3,
     Later = 4
 }
+
 export type TasksType = {
     description: string
     title: string
@@ -46,9 +49,9 @@ type GetTasksResponse = {
 
 
 const instance = axios.create({
-    baseURL:'https://social-network.samuraijs.com/api/1.1/',
-    withCredentials:true,
-    headers:{
+    baseURL: 'https://social-network.samuraijs.com/api/1.1/',
+    withCredentials: true,
+    headers: {
         'API-KEY': '1136952c-a2c5-4464-80fa-484fab36a6a8',
     }
 })
@@ -56,22 +59,25 @@ export const todolistAPI = {
     updateTodolist(todolistId: string, title: string) {
         const promise = instance.put<ResponseType<{}>>(
             `todo-lists/${todolistId}`,
-            { title: title },
+            {title: title},
         )
         return promise
     },
-    getTodoLists(){
+    getTodoLists() {
         const promise = instance.get<Array<TodoListType>>('todo-lists')
         return promise
     },
-    deleteTodoLists(todoListId:string){
+    deleteTodoLists(todoListId: string) {
         const promise = instance.delete<ResponseType<{}>>(`todo-lists/${todoListId}`)
         return promise
-    },createTodoList(title:string){
-        const promise = instance.post<ResponseType<{item:TodoListType}>>(`todo-lists/`,{title})
+    }, createTodoList(title: string) {
+        const promise = instance.post<ResponseType<{ item: TodoListType }>>(`todo-lists/`, {title})
         return promise
     },
-    getTasks(todolistId:string){
+    getTasks(todolistId: string) {
         return instance.get((`todo-list/${todolistId}/tasks`))
+    },
+    createTask(listId:string, taskTitle:string){
+        return instance.post<{title:string}, AxiosResponse<ResponseType<{item:TasksType}>>>(`todo-lists/${listId}/tasks`)
     }
 }

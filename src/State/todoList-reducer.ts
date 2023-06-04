@@ -37,18 +37,10 @@ type changeTodoListTitleACType = ReturnType<typeof changeTodoListTitleAC>
 type deleteTodoListAcType = ReturnType<typeof deleteTodoListAc>
 export type setTodoListAcType = ReturnType<typeof setTodoListsAC>
 
-export const changeTodoListFilterAC = (todoListId: string, value: FilterValueType) => {
-    return {type: "CHANGE-FILTER", todoListId, value} as const
-}
-export const changeTodoListTitleAC = (listID: string, newTitle: string) => {
-    return {type: "CHANGE-LIST-TITLE", listID, newTitle} as const
-}
-export const deleteTodoListAc = (listId: string) => {
-    return {type: "DELETE-LIST", listId} as const
-}
-export const setTodoListsAC = (todoLists: Array<TodoListType>) => {
-    return {type: 'SET-LIST', todoLists} as const
-}
+export const changeTodoListFilterAC = (todoListId: string, value: FilterValueType) => ({type: "CHANGE-FILTER", todoListId, value}) as const
+export const changeTodoListTitleAC = (listID: string, newTitle: string) => ({type: "CHANGE-LIST-TITLE", listID, newTitle} )as const
+export const deleteTodoListAc = (listId: string) => ({type: "DELETE-LIST", listId}) as const
+export const setTodoListsAC = (todoLists: Array<TodoListType>) =>( {type: 'SET-LIST', todoLists}) as const
 
 export const getTodoTC = () => (dispatch: Dispatch) => {
     todolistAPI.getTodoLists()

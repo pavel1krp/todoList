@@ -64,18 +64,16 @@ export const todolistAPI = {
         return promise
     },
     getTodoLists() {
-        const promise = instance.get<Array<TodoListType>>('todo-lists')
-        return promise
+      return instance.get<Array<TodoListType>>('todo-lists')
     },
     deleteTodoLists(todoListId: string) {
-        const promise = instance.delete<ResponseType<{}>>(`todo-lists/${todoListId}`)
-        return promise
+        return instance.delete<ResponseType<{}>>(`todo-lists/${todoListId}`)
     }, createTodoList(title: string) {
-        const promise = instance.post<ResponseType<{ item: TodoListType }>>(`todo-lists/`, {title})
-        return promise
+        return  instance.post<ResponseType<{ item: TodoListType }>>(`todo-lists/`, {title})
+
     },
     getTasks(todolistId: string) {
-        return instance.get((`todo-list/${todolistId}/tasks`))
+        return instance.get<GetTasksResponse>((`todo-lists/${todolistId}/tasks`))
     },
     createTask(listId: string, taskTitle: string) {
         return instance.post<{ title: string }, AxiosResponse<ResponseType<{ item: TasksType }>>>(`todo-lists/${listId}/tasks`)

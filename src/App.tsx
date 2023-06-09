@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
+import {TasksType} from "./Api/todoList-api";
 import {TodoList} from "./Components/TodoList";
 import {InputForm} from "./Components/InputForm";
 import {
@@ -25,7 +26,7 @@ export type TodolistsType = {
     filter: FilterValueType
 }
 export type TaskObjType = {
-    [key: string]: TaskType[]
+    [key: string]: TasksType[]
 }
 
 function App() {

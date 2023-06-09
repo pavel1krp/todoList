@@ -1,5 +1,5 @@
-import axios, {AxiosResponse} from 'axios'
-
+import {AxiosResponse} from "axios";
+import axios  from 'axios'
 export type TodoListType = {
     id: string
     addedDate: string

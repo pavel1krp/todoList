@@ -6,14 +6,14 @@ import {TasksType, todolistAPI} from "../Api/todoList-api";
 
 const initialState: TaskObjType = {}
 
-export const taskReducer = (state: TaskObjType = initialState, action: taskReducerActionType): TaskObjType|any => {
+export const taskReducer = (state: TaskObjType = initialState, action: taskReducerActionType): TaskObjType => {
     switch (action.type) {
         case "DELETE-TASK":
             return {...state, [action.ListId]: state[action.ListId].filter(el => el.id !== action.taskId)}
         case 'ADD-TASK':
             return {
-                ...state,
-                [action.listId]: [...state[action.listId], {id: v1(), title: action.title, isDone: false}]
+                // ...state,
+                // [action.listId]: [...state[action.listId], {id: v1(), title: action.title, isDone: false}]
             }
         case 'CHANGE-IS-DONE':
             return {

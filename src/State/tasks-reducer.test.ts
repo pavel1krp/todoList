@@ -1,21 +1,24 @@
+import {TaskPriorities, TaskStatuses} from "../Api/todoList-api";
 import {addTaskAC, changeIdDoneAC, changeTaskTitleAC, deleteTaskAC, taskReducer} from "./task-reducer";
 import {v1} from "uuid";
 import {TaskObjType} from "../App";
 let todolistID1 = v1()
 let todolistID2 = v1()
  let tasks: TaskObjType
+
 beforeEach(()=>{
      todolistID1 = v1()
      todolistID2 = v1()
     tasks ={
         [todolistID1]: [
-            {id: '1', title: 'HTML&CSS', isDone: true},
-            {id: '2', title: 'JS', isDone: true},
-            {id: '3', title: 'ReactJS', isDone: false},
+            {description: 'string', title: 'string', completed: true, status: TaskStatuses.Completed, priority: TaskPriorities.Low, startDate: 'string', deadline: 'string', id: '1', todoListId: 'string', order: 0, addedDate: 'string'},
+            {description: 'string', title: 'string', completed: true, status: TaskStatuses.Completed, priority: TaskPriorities.Low, startDate: 'string', deadline: 'string', id: '2', todoListId: 'string', order: 0, addedDate: 'string'},
+            {description: 'string', title: 'string', completed: true, status: TaskStatuses.Completed, priority: TaskPriorities.Low, startDate: 'string', deadline: 'string', id: '3', todoListId: 'string', order: 0, addedDate: 'string'},
         ],
         [todolistID2]: [
-            {id: '1', title: 'Rest API', isDone: true},
-            {id: '2', title: 'GraphQL', isDone: false},
+            {description: 'string', title: 'string', completed: true, status: TaskStatuses.Completed, priority: TaskPriorities.Low, startDate: 'string', deadline: 'string', id: '1', todoListId: 'string', order: 0, addedDate: 'string'},
+            {description: 'string', title: 'string', completed: true, status: TaskStatuses.Completed, priority: TaskPriorities.Low, startDate: 'string', deadline: 'string', id: '2', todoListId: 'string', order: 0, addedDate: 'string'},
+            {description: 'string', title: 'string', completed: false, status: TaskStatuses.Completed, priority: TaskPriorities.Low, startDate: 'string', deadline: 'string', id: '2', todoListId: 'string', order: 0, addedDate: 'string'}
         ]
     }
 })
@@ -33,8 +36,8 @@ test(('must add task for specific list'),()=>{
 })
 test(('must change isDone specific list in specific task'),()=>{
     const result = taskReducer(tasks, changeIdDoneAC(todolistID2, '2', true))
-    expect(result[todolistID1][1].isDone).toBe(true)
-    expect(result[todolistID2][1].isDone).toBe(true)
+    expect(result[todolistID1][1].completed).toBe(true)
+    expect(result[todolistID2][1].completed).toBe(true)
 
 })
 test(('must change title specific list in specific task'),()=>{

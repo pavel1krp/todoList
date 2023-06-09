@@ -10,10 +10,10 @@ import {useDispatch} from "react-redux";
 import {addTaskAC, getTasksTC} from "../State/task-reducer";
 import {changeTodoListFilterAC, changeTodoListTitleAC, deleteTodoListAc} from "../State/todoList-reducer";
 import {Task} from "./Task";
-import {todolistAPI} from "../Api/todoList-api";
+import {TasksType, todolistAPI} from "../Api/todoList-api";
 
 type TodoListPropsType = {
-    list: TaskType[]
+    list: TasksType[]
     ListId: string
     title: string
     filter: FilterValueType
@@ -31,14 +31,14 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
 
     let filteredTask = props.list
     if (props.filter === 'active') {
-        filteredTask = filteredTask.filter(el => !el.isDone)
+        filteredTask = filteredTask.filter(el => !el.completed)
     }
     if (props.filter === 'completed') {
-        filteredTask = filteredTask.filter(el => el.isDone)
+        filteredTask = filteredTask.filter(el => el.completed)
     }
 
     const mappedTask = filteredTask.map(el => {
-        return <Task key={el.id} title={el.title} isDone={el.isDone} listId={ListId} taskId={el.id}/>
+        return <Task key={el.id} title={el.title} isDone={el.completed} listId={ListId} taskId={el.id}/>
     })
     const changeFilterHandler = useCallback((value: FilterValueType) => {
         dispatch(changeTodoListFilterAC(ListId, value))

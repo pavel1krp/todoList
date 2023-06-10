@@ -86,3 +86,9 @@ export const getTasksTC = (todoListId: string) => (dispatch: Dispatch) => {
     todolistAPI.getTasks(todoListId)
         .then(res => dispatch(setTAsksAC(res.data.items, todoListId)))
 }
+
+export const deleteTaskTC = (todoListId: string, taskId: string) => (dispatch: Dispatch) => {
+    todolistAPI.deleteTask(todoListId, taskId)
+        .then(res => dispatch(deleteTaskAC(todoListId, taskId))
+        )
+}

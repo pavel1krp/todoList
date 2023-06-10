@@ -6,8 +6,7 @@ import {InputForm} from "./Components/InputForm";
 import {
     addTodoListAc,
 } from "./State/task-reducer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType, useAppDispatch, useAppSelector} from "./State/store";
+import {useAppDispatch, useAppSelector} from "./State/store";
 import ButtonAppBar from "./Components/ButtonAppBar";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";

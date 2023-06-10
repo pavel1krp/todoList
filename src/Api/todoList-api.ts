@@ -1,5 +1,6 @@
 import {AxiosResponse} from "axios";
-import axios  from 'axios'
+import axios from 'axios'
+
 export type TodoListType = {
     id: string
     addedDate: string
@@ -64,18 +65,21 @@ export const todolistAPI = {
         return promise
     },
     getTodoLists() {
-      return instance.get<Array<TodoListType>>('todo-lists')
+        return instance.get<Array<TodoListType>>('todo-lists')
     },
     deleteTodoLists(todoListId: string) {
         return instance.delete<ResponseType<{}>>(`todo-lists/${todoListId}`)
-    }, createTodoList(title: string) {
-        return  instance.post<ResponseType<{ item: TodoListType }>>(`todo-lists/`, {title})
-
+    },
+    createTodoList(title: string) {
+        return instance.post<ResponseType<{ item: TodoListType }>>(`todo-lists/`, {title})
     },
     getTasks(todolistId: string) {
         return instance.get<GetTasksResponse>((`todo-lists/${todolistId}/tasks`))
     },
     createTask(listId: string, taskTitle: string) {
         return instance.post<{ title: string }, AxiosResponse<ResponseType<{ item: TasksType }>>>(`todo-lists/${listId}/tasks`)
+    },
+    deleteTask(todoId:string, taskId:string){
+        return instance.delete(`todo-lists/${todoId}/tasks/${taskId}`)
     }
 }

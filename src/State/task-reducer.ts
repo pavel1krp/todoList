@@ -14,6 +14,7 @@ export const taskReducer = (state: TaskObjType = initialState, action: taskReduc
             return {
                 // ...state,
                 // [action.listId]: [...state[action.listId], {id: v1(), title: action.title, isDone: false}]
+        ...state, [action.listId]:[...state[action.listId], action.task]
             }
         case 'CHANGE-IS-DONE':
             return {
@@ -72,7 +73,7 @@ export const changeTaskTitleAC = (listId: string, taskId: string, title: string)
     title
 }) as const
 export const deleteTaskAC = (ListId: string, taskId: string) => ({type: "DELETE-TASK", ListId, taskId}) as const
-export const addTaskAC = (listId: string, title: string) => ({type: "ADD-TASK", listId, title}) as const
+export const addTaskAC = (listId: string, task: TasksType) => ({type: "ADD-TASK", listId, task}) as const
 export const changeIdDoneAC = (todoListId: string, taskId: string, done: boolean) => ({
     type: "CHANGE-IS-DONE",
     todoListId,
@@ -91,4 +92,8 @@ export const deleteTaskTC = (todoListId: string, taskId: string) => (dispatch: D
     todolistAPI.deleteTask(todoListId, taskId)
         .then(res => dispatch(deleteTaskAC(todoListId, taskId))
         )
+}
+export const createTaskTC = (todoId:string, title:string)=>(dispatch:Dispatch)=>{
+    todolistAPI.createTask(todoId,title)
+        .then(res=> dispatch(addTaskAC(todoId, res.data.data.item)))
 }

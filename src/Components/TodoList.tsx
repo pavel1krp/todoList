@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import {useDispatch} from "react-redux";
-import {addTaskAC, getTasksTC} from "../State/task-reducer";
+import {addTaskAC, createTaskTC, getTasksTC} from "../State/task-reducer";
 import {changeTodoListFilterAC, changeTodoListTitleAC, deleteTodoListAc} from "../State/todoList-reducer";
 import {Task} from "./Task";
 import {TasksType, todolistAPI} from "../Api/todoList-api";
@@ -21,9 +21,11 @@ type TodoListPropsType = {
 
 export const TodoList = React.memo((props: TodoListPropsType) => {
     const dispatch = useAppDispatch()
+
     useEffect(() => {
         dispatch(getTasksTC(props.ListId))
     }, [])
+
 
     const {
         list, ListId, title, filter, ...restProps
@@ -44,7 +46,7 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
         dispatch(changeTodoListFilterAC(ListId, value))
     }, [ListId])
     const addTaskHandler = useCallback((title: string) => {
-        dispatch(addTaskAC(ListId, title))
+        dispatch(createTaskTC(ListId, title))
     }, [ListId, title])
     const deleteTodoList = useCallback(() => {
         dispatch(deleteTodoListAc(ListId))

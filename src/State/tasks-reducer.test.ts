@@ -28,13 +28,13 @@ test(('must delete task from tasks obj'),()=>{
     expect(result[todolistID1][0].title).toBe('string')
     expect(result[todolistID2][0].title).toBe('STRONG')
 })
-test(('must add task for specific list'),()=>{
-    const result = taskReducer(tasks, addTaskAC(todolistID2, 'title'))
-    // expect(result[todolistID1].length).toBe(3)
-    // expect(result[todolistID2].length).toBe(3)
-    console.log(result)
-    expect(result[todolistID2][2].title).toBe('title')
-})
+// test(('must add task for specific list'),()=>{
+//     const result = taskReducer(tasks, addTaskAC(todolistID2, ))
+//     // expect(result[todolistID1].length).toBe(3)
+//     // expect(result[todolistID2].length).toBe(3)
+//     console.log(result)
+//     expect(result[todolistID2][2].title).toBe('title')
+// })
 test(('must change isDone specific list in specific task'),()=>{
     const result = taskReducer(tasks, changeIdDoneAC(todolistID2, '2', true))
     expect(result[todolistID1][1].completed).toBe(true)

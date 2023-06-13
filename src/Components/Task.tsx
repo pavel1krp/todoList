@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import React, {ChangeEvent, useCallback} from 'react';
 import {TaskStatuses, TasksType} from "../Api/todoList-api";
 import {useAppDispatch} from "../State/store";
-import {changeTaskTitleAC, deleteTaskTC, UpdateTaskTC} from "../State/task-reducer";
+import {deleteTaskTC, UpdateTaskTC} from "../State/task-reducer";
 import {EditableSpan} from "./EditableSpan";
 
 type PropsTaskType = {
@@ -25,7 +25,7 @@ export const Task = React.memo((props: PropsTaskType) => {
         dispatch(deleteTaskTC(listId, taskId))
     }, [listId, taskId, dispatch])
     const changeTaskTitleHandler = useCallback((newTitle: string) => {
-        dispatch(changeTaskTitleAC(listId, taskId, newTitle))
+        dispatch(UpdateTaskTC(listId, taskId, {title:newTitle}))
     }, [listId, taskId, dispatch])
 
     return (

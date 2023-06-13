@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import {TasksType} from "./Api/todoList-api";
+import {LinearIndeterminate} from "./Components/ProgressLinear";
 import {TodoList} from "./Components/TodoList";
 import {InputForm} from "./Components/InputForm";
 import {
@@ -58,6 +59,7 @@ function App() {
     })
     return (
         <div className="App">
+            {0?  <LinearIndeterminate />:null}
             <ButtonAppBar/>
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>

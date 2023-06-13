@@ -18,7 +18,7 @@ export const taskReducer = (state: TaskObjType = initialState, action: taskReduc
         case 'CHANGE-TASK-STATUS':
             return ({
                 ...state, [action.todoListId]: state[action.todoListId]
-                    .map(el => el.id === action.taskId ? {...el, status: action.status} : el)
+                    .map(el => el.id === action.taskId ? {...el, ...action.model} : el)
             })
         case 'ADD-TODO-LIST':
             return {...state, [action.listId]: []}
@@ -70,11 +70,11 @@ export const changeTaskTitleAC = (listId: string, taskId: string, title: string)
 }) as const
 export const deleteTaskAC = (ListId: string, taskId: string) => ({type: "DELETE-TASK", ListId, taskId}) as const
 export const addTaskAC = (listId: string, task: TasksType) => ({type: "ADD-TASK", listId, task}) as const
-export const changeTAskStatusAC = (todoListId: string, taskId: string, status: TaskStatuses) => ({
+export const changeTAskStatusAC = (todoListId: string, taskId: string, model: UpdateTaskModelType) => ({
     type: "CHANGE-TASK-STATUS",
     todoListId,
     taskId,
-    status
+    model
 }) as const
 export const addTodoListAc = (title: string) => ({type: "ADD-TODO-LIST", title, listId: v1()}) as const
 export const setTAsksAC = (tasks: TasksType[], todoListId: string) => ({type: "SET-TASKS", tasks, todoListId}) as const
@@ -91,7 +91,8 @@ export const createTaskTC = (todoId: string, title: string) => (dispatch: Dispat
     todolistAPI.createTask(todoId, title)
         .then(res => dispatch(addTaskAC(todoId, res.data.data.item)))
 }
-interface FlexType  {
+
+interface FlexType {
     title?: string
     description?: string
     status?: TaskStatuses
@@ -100,7 +101,7 @@ interface FlexType  {
     deadline?: string
 }
 
-export const UpdateTaskTC = (todoListId:string,taskId:string,data:FlexType) =>
+export const UpdateTaskTC = (todoListId: string, taskId: string, data: FlexType) =>
     (dispatch: Dispatch, getStata: () => AppRootStateType) => {
 
         const task = getStata().task[todoListId].find(t => t.id === taskId)
@@ -112,11 +113,12 @@ export const UpdateTaskTC = (todoListId:string,taskId:string,data:FlexType) =>
                 deadline: task.deadline,
                 startDate: task.startDate,
                 priority: task.priority,
+                status:task.status,
                 ...data
             }
 
             todolistAPI.updateTask(todoListId, taskId, model)
-                .then(res => dispatch(changeTAskStatusAC(todoListId, taskId, status)))
+                .then(res => dispatch(changeTAskStatusAC(todoListId, taskId, model)))
         }
 
 

@@ -1,6 +1,6 @@
 import {TaskObjType} from "../App";
 import {v1} from "uuid";
-import {setLoadingStatusAC} from "./app-reducer";
+import {setErrorStatusAC, setLoadingStatusAC} from "./app-reducer";
 import {AppRootStateType} from "./store";
 import {setTodoListAcType} from "./todoList-reducer";
 import {Dispatch} from "redux";
@@ -93,8 +93,17 @@ export const createTaskTC = (todoId: string, title: string) => (dispatch: Dispat
     dispatch(setLoadingStatusAC('loading'))
     todolistAPI.createTask(todoId, title)
         .then(res => {
-            dispatch(setLoadingStatusAC('succeeded'))
-                dispatch(addTaskAC(todoId, res.data.data.item))
+                if (res.data.resultCode === 0) {
+                    dispatch(addTaskAC(todoId, res.data.data.item))
+                } else {
+                    if(res.data.messages.length){
+                        dispatch(setErrorStatusAC(res.data.messages[0]))
+                    }else {
+                        dispatch(setErrorStatusAC('Some error, please try refresh page!'))
+                    }
+
+                }
+                dispatch(setLoadingStatusAC('idle'))
             }
         )
 }
@@ -127,8 +136,8 @@ export const UpdateTaskTC = (todoListId: string, taskId: string, data: FlexType)
             todolistAPI.updateTask(todoListId, taskId, model)
                 .then(res => {
                         dispatch(setLoadingStatusAC('succeeded'))
-                    dispatch(changeTAskStatusAC(todoListId, taskId, model))
-                }
+                        dispatch(changeTAskStatusAC(todoListId, taskId, model))
+                    }
                 )
         }
 

@@ -3,7 +3,7 @@ import {v1} from "uuid";
 import {AppRootStateType} from "./store";
 import {setTodoListAcType} from "./todoList-reducer";
 import {Dispatch} from "redux";
-import {TaskStatuses, TasksType, todolistAPI, UpdateTaskModelType} from "../Api/todoList-api";
+import {TaskPriorities, TaskStatuses, TasksType, todolistAPI, UpdateTaskModelType} from "../Api/todoList-api";
 
 const initialState: TaskObjType = {}
 
@@ -91,7 +91,16 @@ export const createTaskTC = (todoId: string, title: string) => (dispatch: Dispat
     todolistAPI.createTask(todoId, title)
         .then(res => dispatch(addTaskAC(todoId, res.data.data.item)))
 }
-export const changeTaskStatusTC = (todoListId: string, taskId: string, status: TaskStatuses) =>
+interface FlexType  {
+    title?: string
+    description?: string
+    status?: TaskStatuses
+    priority?: TaskPriorities
+    startDate?: string
+    deadline?: string
+}
+
+export const UpdateTaskTC = (todoListId:string,taskId:string,data:FlexType) =>
     (dispatch: Dispatch, getStata: () => AppRootStateType) => {
 
         const task = getStata().task[todoListId].find(t => t.id === taskId)
@@ -103,7 +112,7 @@ export const changeTaskStatusTC = (todoListId: string, taskId: string, status: T
                 deadline: task.deadline,
                 startDate: task.startDate,
                 priority: task.priority,
-                status
+                ...data
             }
 
             todolistAPI.updateTask(todoListId, taskId, model)

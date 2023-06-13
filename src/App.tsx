@@ -11,7 +11,7 @@ import ButtonAppBar from "./Components/ButtonAppBar";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import {getTodoTC} from "./State/todoList-reducer";
+import {createTodoTC, getTodoTC} from "./State/todoList-reducer";
 
 export type TaskType = {
     id: string
@@ -39,7 +39,7 @@ function App() {
     const todolists = useAppSelector<TodolistsType[]>(state => state.todoList)
     const tasks = useAppSelector<TaskObjType>(state => state.task)
     const addTodoList = (title: string) => {
-        dispatch(addTodoListAc(title))
+        dispatch(createTodoTC(title))
     }
     const mappedTodoLIst = todolists.map(el => {
         return (

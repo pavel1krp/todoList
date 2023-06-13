@@ -1,5 +1,5 @@
 import {FilterValueType, TodolistsType} from "../App";
-import {addTodoListAcType} from "./task-reducer";
+import {addTodoListAc, addTodoListAcType} from "./task-reducer";
 import {todolistAPI, TodoListType} from "../Api/todoList-api";
 import {Dispatch} from "redux";
 
@@ -13,7 +13,8 @@ export const todoListReducer = (state: TodolistsDomainType[] = initialState, act
         case "CHANGE-FILTER":
             return state.map(el => el.id === action.todoListId ? {...el, filter: action.value} : el)
         case "ADD-TODO-LIST":
-            return [{id: action.listId, title: action.title, filter: 'all'}, ...state]
+            return [{...action.todoList, filter: 'all'}, ...state]
+
         case "CHANGE-LIST-TITLE":
             return state.map(el => el.id === action.listID ? {...el, title: action.newTitle} : el)
         case "DELETE-LIST":
@@ -56,4 +57,11 @@ export const getTodoTC = () => (dispatch: Dispatch) => {
             dispatch(setTodoListsAC(res.data))
         })
 }
-
+export const createTodoTC = (title: string) => (dispatch: Dispatch) => {
+    todolistAPI.createTodoList(title)
+        .then(res => dispatch(addTodoListAc(res.data.data.item)))
+}
+export const deleteTodoTC = (totoListId:string)=>(dispatch:Dispatch)=>{
+    todolistAPI.deleteTodoLists(totoListId)
+        .then(res=> dispatch(deleteTodoListAc(totoListId)))
+}

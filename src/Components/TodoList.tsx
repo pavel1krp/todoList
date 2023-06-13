@@ -40,7 +40,7 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
     }
 
     const mappedTask = filteredTask.map(el => {
-        return <Task key={el.id} title={el.title} isDone={el.completed} listId={ListId} taskId={el.id}/>
+        return <Task key={el.id} title={el.title} isDone={el.completed} task={el} listId={ListId} taskId={el.id}/>
     })
     const changeFilterHandler = useCallback((value: FilterValueType) => {
         dispatch(changeTodoListFilterAC(ListId, value))

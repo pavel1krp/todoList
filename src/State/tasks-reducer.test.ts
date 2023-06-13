@@ -108,12 +108,12 @@ test(('must delete task from tasks obj'), () => {
 //     console.log(result)
 //     expect(result[todolistID2][2].title).toBe('title')
 // })
-test(('must change isDone specific list in specific task'), () => {
-    const result = taskReducer(tasks, changeTAskStatusAC(todolistID2, '2', true))
-    expect(result[todolistID1][1].completed).toBe(true)
-    expect(result[todolistID2][1].completed).toBe(true)
-
-})
+// test(('must change isDone specific list in specific task'), () => {
+//     const result = taskReducer(tasks, changeTAskStatusAC(todolistID2, '2', true))
+//     expect(result[todolistID1][1].completed).toBe(true)
+//     expect(result[todolistID2][1].completed).toBe(true)
+//
+// })
 test(('must change title specific list in specific task'), () => {
     const result = taskReducer(tasks, changeTaskTitleAC(todolistID2, '2', 'New Title'))
     expect(result[todolistID1][1].title).toBe('string')

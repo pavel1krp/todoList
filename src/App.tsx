@@ -4,6 +4,7 @@ import {TasksType} from "./Api/todoList-api";
 import {LinearIndeterminate} from "./Components/ProgressLinear";
 import {TodoList} from "./Components/TodoList";
 import {InputForm} from "./Components/InputForm";
+import {RequestStatusType} from "./State/app-reducer";
 import {
     addTodoListAc,
 } from "./State/task-reducer";
@@ -39,6 +40,7 @@ function App() {
 
     const todolists = useAppSelector<TodolistsType[]>(state => state.todoList)
     const tasks = useAppSelector<TaskObjType>(state => state.task)
+    const status = useAppSelector<RequestStatusType>(state => state.app.status)
     const addTodoList = (title: string) => {
         dispatch(createTodoTC(title))
     }
@@ -59,7 +61,7 @@ function App() {
     })
     return (
         <div className="App">
-            {0?  <LinearIndeterminate />:null}
+            {status=== 'loading'?  <LinearIndeterminate />:null}
             <ButtonAppBar/>
             <Container fixed>
                 <Grid container style={{padding: '20px'}}>

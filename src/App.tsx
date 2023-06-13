@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import {TasksType} from "./Api/todoList-api";
+import {ErrorBar} from "./Components/ErrorBar";
 import {LinearIndeterminate} from "./Components/ProgressLinear";
 import {TodoList} from "./Components/TodoList";
 import {InputForm} from "./Components/InputForm";
@@ -71,6 +72,7 @@ function App() {
                     {mappedTodoLIst}
                 </Grid>
             </Container>
+            <ErrorBar />
         </div>
     );
 }

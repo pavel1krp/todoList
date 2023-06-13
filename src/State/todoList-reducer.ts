@@ -1,5 +1,5 @@
 import {FilterValueType, TodolistsType} from "../App";
-import {setStatusAC} from "./app-reducer";
+import {setLoadingStatusAC} from "./app-reducer";
 import {addTodoListAc, addTodoListAcType} from "./task-reducer";
 import {todolistAPI, TodoListType} from "../Api/todoList-api";
 import {Dispatch} from "redux";
@@ -53,36 +53,36 @@ export const deleteTodoListAc = (listId: string) => ({type: "DELETE-LIST", listI
 export const setTodoListsAC = (todoLists: Array<TodoListType>) => ({type: 'SET-LIST', todoLists}) as const
 
 export const getTodoTC = () => (dispatch: Dispatch) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setLoadingStatusAC('loading'))
     todolistAPI.getTodoLists()
         .then(res => {
             dispatch(setTodoListsAC(res.data))
-            dispatch(setStatusAC('succeeded'))
+            dispatch(setLoadingStatusAC('succeeded'))
         })
 }
 export const createTodoTC = (title: string) => (dispatch: Dispatch) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setLoadingStatusAC('loading'))
     todolistAPI.createTodoList(title)
         .then(res => {
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setLoadingStatusAC('succeeded'))
                 dispatch(addTodoListAc(res.data.data.item))
             }
         )
 }
 export const deleteTodoTC = (totoListId: string) => (dispatch: Dispatch) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setLoadingStatusAC('loading'))
     todolistAPI.deleteTodoLists(totoListId)
         .then(res => {
-                dispatch(setStatusAC('loading'))
+                dispatch(setLoadingStatusAC('loading'))
                 dispatch(deleteTodoListAc(totoListId))
             }
         )
 }
 export const changeTodoListTitle = (todoListId: string, title: string) => (dispatch: Dispatch) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setLoadingStatusAC('loading'))
     todolistAPI.updateTodolist(todoListId, title)
         .then(res => {
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setLoadingStatusAC('succeeded'))
                 dispatch(changeTodoListTitleAC(todoListId, title))
             }
         )

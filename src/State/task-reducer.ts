@@ -1,6 +1,6 @@
 import {TaskObjType} from "../App";
 import {v1} from "uuid";
-import {setStatusAC} from "./app-reducer";
+import {setLoadingStatusAC} from "./app-reducer";
 import {AppRootStateType} from "./store";
 import {setTodoListAcType} from "./todoList-reducer";
 import {Dispatch} from "redux";
@@ -72,28 +72,28 @@ export const addTodoListAc = (todoList: TodoListType) => ({type: "ADD-TODO-LIST"
 export const setTAsksAC = (tasks: TasksType[], todoListId: string) => ({type: "SET-TASKS", tasks, todoListId}) as const
 
 export const getTasksTC = (todoListId: string) => (dispatch: Dispatch) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setLoadingStatusAC('loading'))
     todolistAPI.getTasks(todoListId)
         .then(res => {
                 dispatch(setTAsksAC(res.data.items, todoListId))
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setLoadingStatusAC('succeeded'))
             }
         )
 }
 export const deleteTaskTC = (todoListId: string, taskId: string) => (dispatch: Dispatch) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setLoadingStatusAC('loading'))
     todolistAPI.deleteTask(todoListId, taskId)
         .then(res => {
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setLoadingStatusAC('succeeded'))
                 dispatch(deleteTaskAC(todoListId, taskId))
             }
         )
 }
 export const createTaskTC = (todoId: string, title: string) => (dispatch: Dispatch) => {
-    dispatch(setStatusAC('loading'))
+    dispatch(setLoadingStatusAC('loading'))
     todolistAPI.createTask(todoId, title)
         .then(res => {
-            dispatch(setStatusAC('succeeded'))
+            dispatch(setLoadingStatusAC('succeeded'))
                 dispatch(addTaskAC(todoId, res.data.data.item))
             }
         )
@@ -110,7 +110,7 @@ interface FlexType {
 
 export const UpdateTaskTC = (todoListId: string, taskId: string, data: FlexType) =>
     (dispatch: Dispatch, getStata: () => AppRootStateType) => {
-        dispatch(setStatusAC('loading'))
+        dispatch(setLoadingStatusAC('loading'))
         const task = getStata().task[todoListId].find(t => t.id === taskId)
 
         if (task) {
@@ -126,7 +126,7 @@ export const UpdateTaskTC = (todoListId: string, taskId: string, data: FlexType)
 
             todolistAPI.updateTask(todoListId, taskId, model)
                 .then(res => {
-                        dispatch(setStatusAC('succeeded'))
+                        dispatch(setLoadingStatusAC('succeeded'))
                     dispatch(changeTAskStatusAC(todoListId, taskId, model))
                 }
                 )

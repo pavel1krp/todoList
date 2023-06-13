@@ -1,5 +1,5 @@
 import {TaskPriorities, TaskStatuses} from "../Api/todoList-api";
-import {addTaskAC, changeIdDoneAC, changeTaskTitleAC, deleteTaskAC, taskReducer} from "./task-reducer";
+import {addTaskAC, changeTAskStatusAC, changeTaskTitleAC, deleteTaskAC, taskReducer} from "./task-reducer";
 import {v1} from "uuid";
 import {TaskObjType} from "../App";
 
@@ -109,7 +109,7 @@ test(('must delete task from tasks obj'), () => {
 //     expect(result[todolistID2][2].title).toBe('title')
 // })
 test(('must change isDone specific list in specific task'), () => {
-    const result = taskReducer(tasks, changeIdDoneAC(todolistID2, '2', true))
+    const result = taskReducer(tasks, changeTAskStatusAC(todolistID2, '2', true))
     expect(result[todolistID1][1].completed).toBe(true)
     expect(result[todolistID2][1].completed).toBe(true)
 

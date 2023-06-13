@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useCallback} from 'react';
 import {useAppDispatch} from "../State/store";
-import {changeIdDoneAC, changeTaskTitleAC, deleteTaskAC, deleteTaskTC} from "../State/task-reducer";
+import {changeTAskStatusAC, changeTaskTitleAC, deleteTaskAC, deleteTaskTC} from "../State/task-reducer";
 import Checkbox from "@mui/material/Checkbox";
 import {EditableSpan} from "./EditableSpan";
 import IconButton from "@mui/material/IconButton";
@@ -18,7 +18,7 @@ export const Task = React.memo ((props:PropsTaskType) => {
     const {listId, taskId,title,isDone, ...restProps} = props
     const dispatch = useAppDispatch()
     const changeIsDoneHandler = useCallback( (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(changeIdDoneAC(listId, taskId, e.currentTarget.checked))
+        dispatch(changeTAskStatusAC(listId, taskId, e.currentTarget.checked))
     },[listId,taskId])
     const deleteTaskHandler =useCallback( () => {
         dispatch(deleteTaskTC(listId,taskId))

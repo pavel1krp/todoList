@@ -1,4 +1,5 @@
 import {TaskObjType} from "../App";
+import {handleNetworkError} from "../utils/error-utils";
 import {setErrorAC, setLoadingStatusAC} from "./app-reducer";
 import {AppRootStateType} from "./store";
 import {SetTodoListAcType} from "./todoList-reducer";
@@ -86,7 +87,9 @@ export const deleteTaskTC = (todoListId: string, taskId: string) => (dispatch: D
                 dispatch(setLoadingStatusAC('succeeded'))
                 dispatch(deleteTaskAC(todoListId, taskId))
             }
-        )
+        ).catch(e=>{
+        handleNetworkError(dispatch, e.message)
+    })
 }
 
 export enum ResultCode {
@@ -112,8 +115,8 @@ export const createTaskTC = (todoId: string, title: string) => (dispatch: Dispat
                 }
                 dispatch(setLoadingStatusAC('idle'))
             }
-        ).catch(()=>{
-
+        ).catch((e)=>{
+        handleNetworkError(dispatch, e.message)
     })
 }
 
@@ -156,8 +159,7 @@ export const UpdateTaskTC = (todoListId: string, taskId: string, data: FlexType)
                         }
                     }
                 ).catch((e)=>{
-                dispatch(setLoadingStatusAC('failed'))
-                dispatch(setErrorAC(e.message))
+                handleNetworkError(dispatch, e.message)
             })
         }
 

@@ -1,8 +1,7 @@
 import {TaskObjType} from "../App";
-import {v1} from "uuid";
 import {setErrorAC, setLoadingStatusAC} from "./app-reducer";
 import {AppRootStateType} from "./store";
-import {setEntityStatus, SetTodoListAcType} from "./todoList-reducer";
+import {SetTodoListAcType} from "./todoList-reducer";
 import {Dispatch} from "redux";
 import {
     TaskPriorities,
@@ -83,7 +82,7 @@ export const getTasksTC = (todoListId: string) => (dispatch: Dispatch) => {
 export const deleteTaskTC = (todoListId: string, taskId: string) => (dispatch: Dispatch) => {
     dispatch(setLoadingStatusAC('loading'))
     todolistAPI.deleteTask(todoListId, taskId)
-        .then(res => {
+        .then(() => {
                 dispatch(setLoadingStatusAC('succeeded'))
                 dispatch(deleteTaskAC(todoListId, taskId))
             }
@@ -113,7 +112,7 @@ export const createTaskTC = (todoId: string, title: string) => (dispatch: Dispat
                 }
                 dispatch(setLoadingStatusAC('idle'))
             }
-        ).catch((e)=>{
+        ).catch(()=>{
 
     })
 }

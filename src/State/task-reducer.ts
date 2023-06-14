@@ -1,8 +1,8 @@
 import {TaskObjType} from "../App";
 import {v1} from "uuid";
-import {setErrorStatusAC, setLoadingStatusAC} from "./app-reducer";
+import {setErrorAC, setLoadingStatusAC} from "./app-reducer";
 import {AppRootStateType} from "./store";
-import {setTodoListAcType} from "./todoList-reducer";
+import {SetTodoListAcType} from "./todoList-reducer";
 import {Dispatch} from "redux";
 import {
     TaskPriorities,
@@ -51,7 +51,7 @@ export type taskReducerActionType = deleteTaskACType |
     addTaskACType |
     changeIdDoneACType |
     addTodoListAcType |
-    setTodoListAcType |
+    SetTodoListAcType |
     setTAsksACType
 
 type deleteTaskACType = ReturnType<typeof deleteTaskAC>
@@ -89,17 +89,25 @@ export const deleteTaskTC = (todoListId: string, taskId: string) => (dispatch: D
             }
         )
 }
+
+export enum ResultCode {
+    OK = 0,
+    ERROR = 1,
+    ERROR_CAPTCHA = 10,
+}
+
+
 export const createTaskTC = (todoId: string, title: string) => (dispatch: Dispatch) => {
     dispatch(setLoadingStatusAC('loading'))
     todolistAPI.createTask(todoId, title)
         .then(res => {
-                if (res.data.resultCode === 0) {
+                if (res.data.resultCode === ResultCode.OK) {
                     dispatch(addTaskAC(todoId, res.data.data.item))
                 } else {
-                    if(res.data.messages.length){
-                        dispatch(setErrorStatusAC(res.data.messages[0]))
-                    }else {
-                        dispatch(setErrorStatusAC('Some error, please try refresh page!'))
+                    if (res.data.messages.length) {
+                        dispatch(setErrorAC(res.data.messages[0]))
+                    } else {
+                        dispatch(setErrorAC('Some error, please try refresh page!'))
                     }
 
                 }
@@ -135,8 +143,16 @@ export const UpdateTaskTC = (todoListId: string, taskId: string, data: FlexType)
 
             todolistAPI.updateTask(todoListId, taskId, model)
                 .then(res => {
-                        dispatch(setLoadingStatusAC('succeeded'))
-                        dispatch(changeTAskStatusAC(todoListId, taskId, model))
+                        if (res.data.resultCode === ResultCode.OK) {
+                            dispatch(setLoadingStatusAC('succeeded'))
+                            dispatch(changeTAskStatusAC(todoListId, taskId, model))
+                        } else {
+                            if (res.data.messages.length) {
+                                dispatch(setErrorAC(res.data.messages[0]))
+                            } else {
+                                dispatch(setErrorAC('Some error, please try refresh page!'))
+                            }
+                        }
                     }
                 )
         }

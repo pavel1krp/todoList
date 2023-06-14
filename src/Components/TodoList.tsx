@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import {FilterValueType, TaskType} from "../App";
+import {RequestStatusType} from "../State/app-reducer";
 import {useAppDispatch} from "../State/store";
 import {EditableSpan} from "./EditableSpan";
 import {InputForm} from "./InputForm";
@@ -23,6 +24,7 @@ type TodoListPropsType = {
     ListId: string
     title: string
     filter: FilterValueType
+    entityStatus:RequestStatusType
 }
 
 export const TodoList = React.memo((props: TodoListPropsType) => {
@@ -63,7 +65,7 @@ export const TodoList = React.memo((props: TodoListPropsType) => {
     return (
         <div>
             <h3><EditableSpan changeTitle={changeListTitleHandler} title={title}/>
-                <IconButton onClick={deleteTodoList} aria-label="delete">
+                <IconButton onClick={deleteTodoList} aria-label="delete" disabled={props.entityStatus === 'loading'}>
                     <DeleteIcon/>
                 </IconButton>
             </h3>

@@ -6,15 +6,12 @@ import {LinearIndeterminate} from "./Components/ProgressLinear";
 import {TodoList} from "./Components/TodoList";
 import {InputForm} from "./Components/InputForm";
 import {RequestStatusType} from "./State/app-reducer";
-import {
-    addTodoListAc,
-} from "./State/task-reducer";
 import {useAppDispatch, useAppSelector} from "./State/store";
 import ButtonAppBar from "./Components/ButtonAppBar";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import {createTodoTC, getTodoTC} from "./State/todoList-reducer";
+import {createTodoTC, getTodoTC, TodoListsDomainType} from "./State/todoList-reducer";
 
 export type TaskType = {
     id: string
@@ -22,7 +19,7 @@ export type TaskType = {
     isDone: boolean
 }
 export type FilterValueType = 'all' | 'active' | 'completed'
-export type TodolistsType = {
+export type TodoListsType = {
     id: string
     title: string
     filter: FilterValueType
@@ -39,7 +36,7 @@ function App() {
         dispatch(getTodoTC())
     }, [])
 
-    const todolists = useAppSelector<TodolistsType[]>(state => state.todoList)
+    const todolists = useAppSelector<TodoListsDomainType[]>(state => state.todoList)
     const tasks = useAppSelector<TaskObjType>(state => state.task)
     const status = useAppSelector<RequestStatusType>(state => state.app.status)
     const addTodoList = (title: string) => {
@@ -55,6 +52,7 @@ function App() {
                               ListId={el.id}
                               title={el.title}
                               filter={el.filter}
+                              entityStatus = {el.entityStatus}
                     />
                 </Grid>
             </Paper>

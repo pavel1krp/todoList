@@ -2,7 +2,7 @@ import {TaskObjType} from "../App";
 import {v1} from "uuid";
 import {setErrorAC, setLoadingStatusAC} from "./app-reducer";
 import {AppRootStateType} from "./store";
-import {SetTodoListAcType} from "./todoList-reducer";
+import {setEntityStatus, SetTodoListAcType} from "./todoList-reducer";
 import {Dispatch} from "redux";
 import {
     TaskPriorities,
@@ -113,7 +113,9 @@ export const createTaskTC = (todoId: string, title: string) => (dispatch: Dispat
                 }
                 dispatch(setLoadingStatusAC('idle'))
             }
-        )
+        ).catch((e)=>{
+
+    })
 }
 
 interface FlexType {
@@ -154,8 +156,10 @@ export const UpdateTaskTC = (todoListId: string, taskId: string, data: FlexType)
                             }
                         }
                     }
-                )
+                ).catch((e)=>{
+                dispatch(setLoadingStatusAC('failed'))
+                dispatch(setErrorAC(e.message))
+            })
         }
-
 
     }

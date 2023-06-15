@@ -111,7 +111,6 @@ export const createTaskTC = (todoId: string, title: string) => (dispatch: Dispat
                     } else {
                         dispatch(setErrorAC('Some error, please try refresh page!'))
                     }
-
                 }
                 dispatch(setLoadingStatusAC('idle'))
             }
